@@ -38,8 +38,7 @@ public class Objet {
                 System.out.println(id + " " + description + " = (" + latitude + "; " + longitude + ")" + " " + visible + "   " + proprietaire);
             }
 
-            requete.close();
-            connexion.close();
+            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
