@@ -11,9 +11,11 @@ import javax.imageio.ImageIO;
 
 public class Avatar {
 
-    protected double x, y;
+    protected int x, y;
     private BufferedImage mario;
     private boolean gauche, droite, haut, bas, saut;
+    private int id;
+    private int personnage;
 
     public Avatar() {
         try {
@@ -49,6 +51,22 @@ public class Avatar {
     public void setSaut(boolean saut) {
         this.saut = saut;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
     
     public void miseAJour() throws InterruptedException {
         if (this.gauche) {
@@ -63,27 +81,22 @@ public class Avatar {
         if (this.haut) {
             y -= 25;
         }
-        if (x > 1273-52) {
-            x = 1273-50;
-        }
+
         if (x < 0) {
             x = 0;
         }
-        if (y > 145){
-            y = 145;
-        }
-        if (y < 0) {
-            y = 0;
-        }
+
+
         if (this.saut) {
             y -= 50;
-            TimeUnit.SECONDS.sleep(1);
-            y += 50;
+            int i;
+            
+            }
         }
-    }
+    
 
     public void rendu(Graphics2D contexte) {
-        contexte.drawImage(this.mario, (int) x, (int) y, 50, 50, null);
+        //contexte.drawImage(this.mario, (int) x, (int) y, 50, 50, null);
     }
 
 }

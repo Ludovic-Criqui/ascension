@@ -23,6 +23,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
 
     public FenetreDeJeu() {
         // initialisation de la fenetre
+        this.jeu = new Jeu();
         this.setSize(1273, 225);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +34,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         this.pack();
 
         // Creation du jeu
-        this.jeu = new Jeu();
+        
 
         // Creation du buffer pour l'affichage du jeu et recuperation du contexte graphique
         this.framebuffer = new BufferedImage(this.jLabel1.getWidth(), this.jLabel1.getHeight(), BufferedImage.TYPE_INT_ARGB);

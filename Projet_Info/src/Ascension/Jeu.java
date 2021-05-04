@@ -7,15 +7,28 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Jeu {
 
-    private BufferedImage fond;
+    private BufferedImage fond, mario;
     public Avatar avatar;
+    private Connection c;
 
     public Jeu() {
         try {
+            this.c = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20202021_s2_vs2_tp1_ascension?serverTimezone=UTC", "etudiant", "YTDTvj9TR3CDYCmP");
+        } catch (SQLException ex) {
+            Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            
             this.fond = ImageIO.read(new File("mario1.png"));
+            this.mario = ImageIO.read(new File("mario.png"));
         } catch (IOException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -28,7 +41,25 @@ public class Jeu {
 
     public void rendu(Graphics2D contexte) {
         contexte.drawImage(this.fond, 0, 0, null);
-        this.avatar.rendu(contexte);
+        try {
+            PreparedStatement requete = c.prepareStatement("UPDATE joueur SET x = ?, y = ? WHERE id = ?");
+            requete.setInt(1, this.avatar.getX());
+            requete.setInt(2, this.avatar.getY());
+            requete.setInt(3, 50);
+            requete.executeUpdate();
+            requete.close();
+            
+            PreparedStatement requete2 = c.prepareStatement("SELECT x, y FROM joueur");
+            ResultSet resultat = requete2.executeQuery();
+            while (resultat.next()){
+                int abscisse = resultat.getInt("x");
+                int ordonnee = resultat.getInt("y");
+                
+                contexte.drawImage(mario, abscisse, ordonnee, 50, 50, null);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
