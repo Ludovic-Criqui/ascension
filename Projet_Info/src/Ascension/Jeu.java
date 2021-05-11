@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 public class Jeu {
 
-    private BufferedImage fond, mario, luigi;
+    private BufferedImage fond, mario, steve, amongus, ratchet;
     public Avatar avatar;
     private Connection c;
 
@@ -26,9 +26,11 @@ public class Jeu {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            this.fond = ImageIO.read(new File("mario1.png"));
+            this.fond = ImageIO.read(new File("fond.png"));
             this.mario = ImageIO.read(new File("mario.png"));
-            this.luigi = ImageIO.read(new File("luigi.png"));
+            this.steve = ImageIO.read(new File("steve.png"));
+            this.amongus = ImageIO.read(new File("amongus.png"));
+            this.ratchet = ImageIO.read(new File("ratchet.png"));
         } catch (IOException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -45,7 +47,7 @@ public class Jeu {
             PreparedStatement requete = c.prepareStatement("UPDATE joueur SET x = ?, y = ? WHERE id = ?");
             requete.setInt(1, this.avatar.getX());
             requete.setInt(2, this.avatar.getY());
-            requete.setInt(3, 4);
+            requete.setInt(3, 1);
             requete.executeUpdate();
             requete.close();
         } catch (SQLException ex) {
@@ -57,7 +59,19 @@ public class Jeu {
             while (resultat.next()) {
                 int abscisse = resultat.getInt("x");
                 int ordonnee = resultat.getInt("y");
-                contexte.drawImage(mario, abscisse, ordonnee, 50, 50, null);
+                int perso = 3;
+                if (perso == 1) {
+                    contexte.drawImage(mario, abscisse, ordonnee, 50, 50, null);
+                }
+                if (perso == 2){
+                    contexte.drawImage(steve, abscisse, ordonnee, 50, 50, null);
+                }
+                if (perso == 3){
+                    contexte.drawImage(amongus, abscisse, ordonnee, 50, 50, null);
+                }
+                if (perso == 4){
+                    contexte.drawImage(ratchet, abscisse, ordonnee, 50, 50, null);
+                }
             }
             requete2.close();
         } catch (SQLException ex) {

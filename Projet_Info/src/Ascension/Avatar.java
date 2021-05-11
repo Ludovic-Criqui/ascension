@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class Avatar {
 
     protected int x, y;
-    private BufferedImage mario, luigi;
+    private BufferedImage mario, steve, amongus, ratchet;
     private boolean gauche, droite, haut, bas, saut;
     private int id;
     private int personnage;
@@ -19,12 +19,15 @@ public class Avatar {
     public Avatar() {
         try {
             this.mario = ImageIO.read(new File("mario.png"));
-            this.luigi = ImageIO.read(new File("luigi.png"));
+            this.steve = ImageIO.read(new File("steve.png"));
+            this.amongus = ImageIO.read(new File("amongus.png"));
+            this.ratchet = ImageIO.read(new File("ratchet.png"));
         } catch (IOException ex) {
             Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.x = 100;
         this.y = 145;
+        // this.id = ;
         this.gauche = false;
         this.droite = false;
         this.haut = false;
