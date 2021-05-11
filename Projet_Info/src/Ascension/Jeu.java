@@ -43,11 +43,12 @@ public class Jeu {
 
     public void rendu(Graphics2D contexte) {
         contexte.drawImage(this.fond, 0, 0, null);
+        int id = 1;
         try {
             PreparedStatement requete = c.prepareStatement("UPDATE joueur SET x = ?, y = ? WHERE id = ?");
             requete.setInt(1, this.avatar.getX());
             requete.setInt(2, this.avatar.getY());
-            requete.setInt(3, 1);
+            requete.setInt(3, id);
             requete.executeUpdate();
             requete.close();
         } catch (SQLException ex) {
@@ -59,17 +60,16 @@ public class Jeu {
             while (resultat.next()) {
                 int abscisse = resultat.getInt("x");
                 int ordonnee = resultat.getInt("y");
-                int perso = 3;
-                if (perso == 1) {
+                if (id == 1) {
                     contexte.drawImage(mario, abscisse, ordonnee, 50, 50, null);
                 }
-                if (perso == 2){
+                if (id == 2){
                     contexte.drawImage(steve, abscisse, ordonnee, 50, 50, null);
                 }
-                if (perso == 3){
+                if (id == 3){
                     contexte.drawImage(amongus, abscisse, ordonnee, 50, 50, null);
                 }
-                if (perso == 4){
+                if (id == 4){
                     contexte.drawImage(ratchet, abscisse, ordonnee, 50, 50, null);
                 }
             }
