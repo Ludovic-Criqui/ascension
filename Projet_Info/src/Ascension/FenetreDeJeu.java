@@ -22,8 +22,9 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     private Timer timer;
 
     public FenetreDeJeu() {
-        // initialisation de la fenetre
+        // Creation du jeu
         this.jeu = new Jeu();
+        // initialisation de la fenetre
         this.setSize(1273, 225);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +34,6 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         this.setContentPane(this.jLabel1);
         this.pack();
 
-        // Creation du jeu
         
 
         // Creation du buffer pour l'affichage du jeu et recuperation du contexte graphique

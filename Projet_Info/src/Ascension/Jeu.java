@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 public class Jeu {
 
-    private BufferedImage fond, mario;
+    private BufferedImage fond, mario, luigi;
     public Avatar avatar;
     private Connection c;
 
@@ -26,9 +26,9 @@ public class Jeu {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            
             this.fond = ImageIO.read(new File("mario1.png"));
             this.mario = ImageIO.read(new File("mario.png"));
+            this.luigi = ImageIO.read(new File("luigi.png"));
         } catch (IOException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -45,21 +45,23 @@ public class Jeu {
             PreparedStatement requete = c.prepareStatement("UPDATE joueur SET x = ?, y = ? WHERE id = ?");
             requete.setInt(1, this.avatar.getX());
             requete.setInt(2, this.avatar.getY());
-            requete.setInt(3, 50);
+            requete.setInt(3, 4);
             requete.executeUpdate();
             requete.close();
-            
+        } catch (SQLException ex) {
+            Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
             PreparedStatement requete2 = c.prepareStatement("SELECT x, y FROM joueur");
             ResultSet resultat = requete2.executeQuery();
-            while (resultat.next()){
+            while (resultat.next()) {
                 int abscisse = resultat.getInt("x");
                 int ordonnee = resultat.getInt("y");
-                
                 contexte.drawImage(mario, abscisse, ordonnee, 50, 50, null);
             }
+            requete2.close();
         } catch (SQLException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
