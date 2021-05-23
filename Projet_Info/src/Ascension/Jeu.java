@@ -18,6 +18,7 @@ public class Jeu {
     private BufferedImage fond, mario, steve, amongus, ratchet;
     public Avatar avatar;
     private Connection c;
+    private Carte carte;
 
     public Jeu() {
         try {
@@ -25,6 +26,7 @@ public class Jeu {
         } catch (SQLException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.carte = new Carte();
         try {
             this.fond = ImageIO.read(new File("fond.png"));
             this.mario = ImageIO.read(new File("mario.png"));
@@ -42,8 +44,8 @@ public class Jeu {
     }
 
     public void rendu(Graphics2D contexte) {
-        contexte.drawImage(this.fond, 0, 0, null);
-        int id = 1;
+        this.carte.rendu(contexte);
+        int id = 2;
         try {
             PreparedStatement requete = c.prepareStatement("UPDATE joueur SET x = ?, y = ? WHERE id = ?");
             requete.setInt(1, this.avatar.getX());
