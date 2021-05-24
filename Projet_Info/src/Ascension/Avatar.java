@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -15,6 +16,10 @@ public class Avatar {
     private boolean gauche, droite, haut, bas, saut;
     private int id;
     private int personnage;
+    private long date;
+    private long dateLimite;
+    private int timerSaut = 5;
+    private boolean aSaute;
 
     public Avatar() {
         try {
@@ -33,8 +38,10 @@ public class Avatar {
         this.haut = false;
         this.bas = false;
         this.saut = false;
+        aSaute = false;
+        dateLimite = 0;
     }
-    
+
     public void setGauche(boolean gauche) {
         this.gauche = gauche;
     }
@@ -70,7 +77,7 @@ public class Avatar {
     public int getY() {
         return y;
     }
-    
+
     public void miseAJour() throws InterruptedException {
         if (this.gauche) {
             x -= 5;
@@ -89,15 +96,33 @@ public class Avatar {
             x = 0;
         }
 
+        if (y < 0) {
+            y = 0;
+        }
 
         if (this.saut) {
-            
+            date = System.currentTimeMillis();
+            if (date > dateLimite) {
+                if (!aSaute) {
+                    aSaute = true;
+                }
             }
+
+            if (aSaute) {
+                y -= 15;
+                Thread.sleep(5);
+                timerSaut--;
+                if (timerSaut <= 0) {
+                    aSaute = false;
+                    dateLimite = System.currentTimeMillis() + 500;
+                }
+            }
+
         }
-    
+    }
 
     public void rendu(Graphics2D contexte) {
-        //contexte.drawImage(this.mario, (int) x, (int) y, 50, 50, null);
+        // contexte.drawImage(this.mario, (int) x, (int) y, 50, 50, null);
     }
 
 }
