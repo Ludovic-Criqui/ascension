@@ -21,6 +21,7 @@ public class Avatar {
     private long dateLimite;
     private int timerSaut = 5;
     private boolean aSaute;
+    private String pseudo;
 
     public Avatar() {
         try {
@@ -100,7 +101,15 @@ public class Avatar {
         if (y < 0) {
             y = 0;
         }
+        
+        if (Ymap < -1440){
+            Ymap=-1440;
+        }
 
+        if (Ymap > 385){
+            Ymap=385;
+        }
+        
         if (this.saut) {
             date = System.currentTimeMillis();
             if (date > dateLimite) {
@@ -133,6 +142,13 @@ public class Avatar {
     public int getId() {
         return id;
     }
-    
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setPseudo(String pseudo){
+        this.pseudo=pseudo;
+    }
+    
 }

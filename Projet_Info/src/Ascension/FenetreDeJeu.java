@@ -45,6 +45,10 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         this.timer = new Timer(40, this);
         this.timer.start();
     }
+    
+    public Jeu getJeu() {
+        return jeu;
+    }
 
     // Methode appelee par le timer et qui effectue la boucle de jeu
     @Override
