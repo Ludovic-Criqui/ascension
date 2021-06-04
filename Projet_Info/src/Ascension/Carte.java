@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Ascension;
 
 import java.awt.Graphics2D;
@@ -14,20 +9,16 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import java.io.*;
 
-/**
- * Exemple de classe carte
- *
- * @author guillaume.laurent
- */
 public class Carte {
 
     private int largeur = 40;
     private int hauteur = 60;
     private int tailleTuile = 32;
-
     private BufferedImage uneTuile;
     private BufferedImage[] tuiles;
     private int[][] decor;
+    private int Xmur = 15;
+    private int Ymur =25 ;
     
     public Carte() {
         try {
@@ -82,10 +73,10 @@ public class Carte {
 
     }
 
-    public void rendu(Graphics2D contexte) {
+    public void rendu(Graphics2D contexte,int Ymap) {
         for (int i = 0; i < largeur; i++) {
             for (int j = 0; j < hauteur; j++) {
-                contexte.drawImage(tuiles[decor[j][i]], i * 32, j * 32, null);
+                contexte.drawImage(tuiles[decor[j][i]], i * 32, j * 32 + Ymap,null);
             }
         }
 

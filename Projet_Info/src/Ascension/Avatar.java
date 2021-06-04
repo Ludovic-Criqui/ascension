@@ -12,9 +12,10 @@ import javax.imageio.ImageIO;
 public class Avatar {
 
     protected int x, y;
+    private int Ymap = -1440;
     private BufferedImage mario, steve, amongus, ratchet;
     private boolean gauche, droite, haut, bas, saut;
-    private int id;
+    private int id=1;
     private int personnage;
     private long date;
     private long dateLimite;
@@ -80,16 +81,16 @@ public class Avatar {
 
     public void miseAJour() throws InterruptedException {
         if (this.gauche) {
-            x -= 5;
+            x -= 16;
         }
         if (this.droite) {
-            x += 5;
+            x += 16;
         }
         if (this.bas) {
-            y += 5;
+            Ymap -=16;
         }
         if (this.haut) {
-            y -= 5;
+            Ymap += 16;
         }
 
         if (x < 0) {
@@ -124,5 +125,14 @@ public class Avatar {
     public void rendu(Graphics2D contexte) {
         // contexte.drawImage(this.mario, (int) x, (int) y, 50, 50, null);
     }
+
+    public int getYmap() {
+        return Ymap;
+    }
+
+    public int getId() {
+        return id;
+    }
+    
 
 }
