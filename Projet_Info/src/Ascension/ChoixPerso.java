@@ -16,6 +16,8 @@ public class ChoixPerso extends javax.swing.JFrame {
      */
     public ChoixPerso() {
         initComponents();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2);
     }
 
     /**

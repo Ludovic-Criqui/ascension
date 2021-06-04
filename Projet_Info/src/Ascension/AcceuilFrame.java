@@ -28,9 +28,13 @@ public class AcceuilFrame extends javax.swing.JFrame {
         initComponents();
         this.fenetreJeu= new FenetreDeJeu();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.salon = new SalonAttente(1);
+        
         Icon icon = new ImageIcon("background1.png");
+        this.jeu= new Jeu() ;
+        this.salon = new SalonAttente(1,this.jeu); 
 //        this.jButton2(icon);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2 - this.getWidth()/2+50, dim.height/2 - this.getHeight()/2);
     }
 
     /**
@@ -48,6 +52,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setText("Créer une partie");
         jButton1.setPreferredSize(new java.awt.Dimension(133, 23));

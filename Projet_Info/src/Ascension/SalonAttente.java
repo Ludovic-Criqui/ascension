@@ -5,13 +5,32 @@
  */
 package Ascension;
 
-import javax.swing.JButton;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.JButton;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.Timer;
 /**
  *
  * @author mliberge
  */
-public class SalonAttente extends javax.swing.JFrame {
+public class SalonAttente extends javax.swing.JFrame implements ActionListener {
 
     /**
      * Creates new form SalonAttente
@@ -22,12 +41,18 @@ public class SalonAttente extends javax.swing.JFrame {
     private Avatar avatar;
     private int id;
     public boolean boutonVisible;
+    private String saisi;
+    private Connection c;
+    private Timer timer;
     
-    public SalonAttente(int id2) {
+    
+    public SalonAttente(int id2,Jeu jeu2) {
         initComponents();
+
         this.id = id2;
-        
         this.fenetreJeu= new FenetreDeJeu();
+        this.saisi = "";
+        this.jeu=jeu2;
 //        this.attente = new SalonAttente();
 //        this.attente = this.acceuil.getAttente();
 //        this.fenetreJeu= this.acceuil.getFenetreJeu();
@@ -36,8 +61,16 @@ public class SalonAttente extends javax.swing.JFrame {
 //        if(this.id==2){
 //            jButton3.setEnabled(false);
 //        }
-            
-        
+        try {
+            this.c = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20202021_s2_vs2_tp1_ascension?serverTimezone=UTC", "etudiant", "YTDTvj9TR3CDYCmP");
+        } catch (SQLException ex) {
+            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //timer pour action performed  
+        this.timer = new Timer(40, this);
+        this.timer.start();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2);
     }
 
     public void setBoutonVisible(boolean boutonVisible) {
@@ -74,9 +107,10 @@ public class SalonAttente extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -120,14 +154,10 @@ public class SalonAttente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel2)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -138,18 +168,18 @@ public class SalonAttente extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
@@ -174,14 +204,22 @@ public class SalonAttente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
+        this.saisi = jTextField1.getText();
+        this.jeu.avatar.setPseudo(this.saisi);
+        try{
+            PreparedStatement requete = c.prepareStatement("UPDATE joueur SET pseudo = ? WHERE id = ?");
+            requete.setString(1,this.saisi);
+            requete.setInt(2,this.id);
+            requete.executeUpdate();
+            requete.close();
+        }catch (SQLException ex) {
+            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(this.saisi);   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        String saisi = jTextField1.getText();
-        this.avatar.setPseudo(saisi);
-        System.out.println(saisi);
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
@@ -228,7 +266,32 @@ public class SalonAttente extends javax.swing.JFrame {
     }
 
 
-    
+    @Override
+    public void actionPerformed(ActionEvent arg0){
+        if(this.isVisible()){
+            String[] listeDesJoueurs = new String[4];
+            PreparedStatement requete;
+            int i =0;
+            try {
+                requete = c.prepareStatement("SELECT pseudo FROM joueur");
+                ResultSet resultat = requete.executeQuery();
+                while(resultat.next()){
+                    String pseudoJ = resultat.getString("pseudo");
+                    listeDesJoueurs[i] = pseudoJ;
+                    i+=1;
+                    jList1.setModel(new javax.swing.AbstractListModel<String>() {
+
+                    public int getSize() { return listeDesJoueurs.length; }
+                    public String getElementAt(int i) { return listeDesJoueurs[i]; }
+                    });
+                }
+                requete.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("ouou");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
