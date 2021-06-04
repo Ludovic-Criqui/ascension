@@ -22,6 +22,7 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     private JLabel jLabel1;
     private Jeu jeu;
     private Timer timer;
+    private int[] listeSolide;
 
     public FenetreDeJeu() {
         // Creation du jeu
@@ -35,9 +36,8 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         this.jLabel1.setPreferredSize(new java.awt.Dimension(1312, 1952));
         this.setContentPane(this.jLabel1);
         this.pack();
-
-        
-
+        this.listeSolide = new int[]{72, 73, 74, 84, 85, 86, 87, 128, 129, 130, 131, 132, 134, 135, 146, 147, 148, 149, 150, 152, 153, 156, 157, 158, 159, 160, 162, 163, 164, 165, 170, 171, 172, 173, 174, 175, 176, 177, 178, 180, 181, 182, 183, 186, 187, 188, 189, 190, 191, 192, 193, 195, 196, 197, 199, 200, 201, 204, 205, 206, 209, 210, 211, 213, 214, 215, 218, 219, 222, 223, 228, 229, 232, 233};
+    
         // Creation du buffer pour l'affichage du jeu et recuperation du contexte graphique
         this.framebuffer = new BufferedImage(this.jLabel1.getWidth(), this.jLabel1.getHeight(), BufferedImage.TYPE_INT_ARGB);
         this.jLabel1.setIcon(new ImageIcon(framebuffer));
@@ -71,19 +71,33 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         // NOP
     }
 
+    public boolean nonSolide(int solide){
+        boolean ok = true;
+        for (int i=0; i<listeSolide.length; i++){
+            if (listeSolide[i] == solide){
+                ok = false;
+            }
+        }
+        return ok;        
+    }
+    
     @Override
     public void keyPressed(KeyEvent evt) {
-        if (evt.getKeyCode() == evt.VK_RIGHT) {
-            this.jeu.avatar.setDroite(true);
+        if (evt.getKeyCode() == evt.VK_RIGHT && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()][this.jeu.getCarte().getYmur()+1]) ) {
+            this.jeu.avatar.setX(this.jeu.avatar.getX() + 32);
+            this.jeu.getCarte().setYmur(this.jeu.getCarte().getYmur()+1);
         }
-        if (evt.getKeyCode() == evt.VK_LEFT) {
-            this.jeu.avatar.setGauche(true);
+        if (evt.getKeyCode() == evt.VK_LEFT && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()][this.jeu.getCarte().getYmur()-1])) {
+            this.jeu.avatar.setX(this.jeu.avatar.getX() - 32);
+            this.jeu.getCarte().setYmur(this.jeu.getCarte().getYmur()-1);
         }
-        if (evt.getKeyCode() == evt.VK_UP) {
-            this.jeu.avatar.setHaut(true);
+        if (evt.getKeyCode() == evt.VK_UP && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()-1][this.jeu.getCarte().getYmur()])) {
+            this.jeu.avatar.setYmap(this.jeu.avatar.getYmap() + 32);
+            this.jeu.getCarte().setXmur(this.jeu.getCarte().getXmur()-1);
         }
-        if (evt.getKeyCode() == evt.VK_DOWN) {
-            this.jeu.avatar.setBas(true);
+        if (evt.getKeyCode() == evt.VK_DOWN && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()+1][this.jeu.getCarte().getYmur()])) {
+            this.jeu.avatar.setYmap(this.jeu.avatar.getYmap() - 32);
+            this.jeu.getCarte().setXmur(this.jeu.getCarte().getXmur()+1);
         }
         if (evt.getKeyCode() == evt.VK_SPACE) {
             this.jeu.avatar.setSaut(true);
@@ -92,18 +106,6 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
 
     @Override
     public void keyReleased(KeyEvent evt) {
-        if (evt.getKeyCode() == evt.VK_RIGHT) {
-            this.jeu.avatar.setDroite(false);
-        }
-        if (evt.getKeyCode() == evt.VK_LEFT) {
-            this.jeu.avatar.setGauche(false);
-        }
-        if (evt.getKeyCode() == evt.VK_UP) {
-            this.jeu.avatar.setHaut(false);
-        }
-        if (evt.getKeyCode() == evt.VK_DOWN) {
-            this.jeu.avatar.setBas(false);
-        }
         if (evt.getKeyCode() == evt.VK_SPACE) {
             this.jeu.avatar.setSaut(false);
         }        
