@@ -289,7 +289,6 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
             } catch (SQLException ex) {
                 Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("ouou");
         }
     }
 

@@ -34,7 +34,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
         this.salon = new SalonAttente(1,this.jeu); 
 //        this.jButton2(icon);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2 - this.getWidth()/2+50, dim.height/2 - this.getHeight()/2);
+        this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2-170);
     }
 
     /**
