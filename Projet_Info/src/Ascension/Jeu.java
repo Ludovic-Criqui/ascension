@@ -38,6 +38,14 @@ public class Jeu {
         this.avatar = new Avatar();
     }
 
+    public Connection getC() {
+        return c;
+    }
+
+    public Carte getCarte() {
+        return carte;
+    }
+
     public void miseAJour() throws InterruptedException {
         this.avatar.miseAJour();
     }

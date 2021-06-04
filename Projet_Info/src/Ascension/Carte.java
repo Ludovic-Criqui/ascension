@@ -17,8 +17,8 @@ public class Carte {
     private BufferedImage uneTuile;
     private BufferedImage[] tuiles;
     private int[][] decor;
-    private int Xmur = 15;
-    private int Ymur =25 ;
+    private int Xmur = 58;
+    private int Ymur =4 ;
     
     public Carte() {
         try {
@@ -76,7 +76,7 @@ public class Carte {
     public void rendu(Graphics2D contexte,int Ymap) {
         for (int i = 0; i < largeur; i++) {
             for (int j = 0; j < hauteur; j++) {
-                contexte.drawImage(tuiles[decor[j][i]], i * 32, j * 32 + Ymap,null);
+                contexte.drawImage(tuiles[decor[j][i]], i * 32, j * 32 + Ymap, null);
             }
         }
 
@@ -84,6 +84,7 @@ public class Carte {
         contexte.drawImage(uneTuile, 32, 0, null);
 
     }
+    
 
 //    public void rendu(Graphics2D contexte) {
 //        for(int i=0; i<largeur; i++){
@@ -95,4 +96,29 @@ public class Carte {
 ////        contexte.drawImage(uneTuile, 32, 0, null);
 //
 //    }
+
+    public void setXmur(int Xmur) {
+        this.Xmur = Xmur;
+    }
+
+    public void setYmur(int Ymur) {
+        this.Ymur = Ymur;
+    }
+
+    public int getXmur() {
+        return Xmur;
+    }
+
+    public int getYmur() {
+        return Ymur;
+    }
+
+    public BufferedImage[] getTuiles() {
+        return tuiles;
+    }
+
+    public int[][] getDecor() {
+        return decor;
+    }
+    
 }

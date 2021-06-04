@@ -15,7 +15,7 @@ public class Avatar {
     private int Ymap = -1440;
     private BufferedImage mario, steve, amongus, ratchet;
     private boolean gauche, droite, haut, bas, saut;
-    private int id=1;
+    private int id = 1;
     private int personnage;
     private long date;
     private long dateLimite;
@@ -32,7 +32,7 @@ public class Avatar {
         } catch (IOException ex) {
             Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.x = 100;
+        this.x = 120;
         this.y = 145;
         // this.id = ;
         this.gauche = false;
@@ -81,19 +81,6 @@ public class Avatar {
     }
 
     public void miseAJour() throws InterruptedException {
-        if (this.gauche) {
-            x -= 16;
-        }
-        if (this.droite) {
-            x += 16;
-        }
-        if (this.bas) {
-            Ymap -=16;
-        }
-        if (this.haut) {
-            Ymap += 16;
-        }
-
         if (x < 0) {
             x = 0;
         }
@@ -101,15 +88,15 @@ public class Avatar {
         if (y < 0) {
             y = 0;
         }
-        
-        if (Ymap < -1440){
-            Ymap=-1440;
+
+        if (Ymap < -1440) {
+            Ymap = -1440;
         }
 
-        if (Ymap > 385){
-            Ymap=385;
+        if (Ymap > 385) {
+            Ymap = 385;
         }
-        
+
         if (this.saut) {
             date = System.currentTimeMillis();
             if (date > dateLimite) {
@@ -147,8 +134,12 @@ public class Avatar {
         this.id = id;
     }
 
-    public void setPseudo(String pseudo){
-        this.pseudo=pseudo;
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
-    
+
+    public void setYmap(int Ymap) {
+        this.Ymap = Ymap;
+    }
+
 }
