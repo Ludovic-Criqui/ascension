@@ -26,20 +26,14 @@ public class AcceuilFrame extends javax.swing.JFrame {
         this.fenetreJeu = new FenetreDeJeu();
         this.jeu = new Jeu();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-<<<<<<< Updated upstream
         
         Icon icon = new ImageIcon("background1.png");
-        this.jeu= new Jeu() ;
         this.salon = new SalonAttente(1,this.jeu); 
-//        this.jButton2(icon);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2 - this.getWidth()/2+50, dim.height/2 - this.getHeight()/2);
-=======
-        this.salon = new SalonAttente(1);
         this.jLabel2.setVisible(false);
 //      Icon icon = new ImageIcon("background1.png");
 //      this.jButton2(icon);
->>>>>>> Stashed changes
     }
 
     /**

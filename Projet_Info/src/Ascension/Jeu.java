@@ -42,7 +42,7 @@ public class Jeu {
         return c;
     }
 
-    public Carte getCarte() {
+        public Carte getCarte() {
         return carte;
     }
 
