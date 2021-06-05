@@ -16,12 +16,14 @@ public class Avatar {
     private BufferedImage mario, steve, amongus, ratchet;
     private boolean gauche, droite, haut, bas, saut;
     private int id = 1;
-    private int personnage;
+    private int personnage=1;
     private long date;
     private long dateLimite;
     private int timerSaut = 5;
     private boolean aSaute;
     private String pseudo;
+
+   
 
     public Avatar() {
         try {
@@ -43,7 +45,11 @@ public class Avatar {
         aSaute = false;
         dateLimite = 0;
     }
-
+    
+    public void setPersonnage(int personnage) {
+        this.personnage = personnage;
+    }
+    
     public void setGauche(boolean gauche) {
         this.gauche = gauche;
     }
@@ -80,6 +86,12 @@ public class Avatar {
         return y;
     }
 
+    public int getPersonnage() {
+        return personnage;
+    }
+
+    
+    
     public void miseAJour() throws InterruptedException {
         if (x < 0) {
             x = 0;

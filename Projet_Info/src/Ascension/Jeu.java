@@ -19,6 +19,7 @@ public class Jeu {
     public Avatar avatar;
     private Connection c;
     private Carte carte;
+    private int personnageAvatar;
 
     public Jeu() {
         try {
@@ -64,35 +65,49 @@ public class Jeu {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
+            PreparedStatement requete3 = c.prepareStatement("SELECT personnage FROM joueur");
+            ResultSet resultat2 = requete3.executeQuery();
+            while (resultat2.next()) {
+                personnageAvatar = resultat2.getInt("personnage");
+            }
+            requete3.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
             
-            if (this.avatar.getId() == 1) {
+            if (personnageAvatar == 1) {
                     contexte.drawImage(mario, this.avatar.getX(), 400, 50, 50, null);
                 }
-            if (this.avatar.getId() == 2) {
+            if (personnageAvatar == 2) {
                     contexte.drawImage(steve, this.avatar.getX(), 400, 50, 50, null);
                 }
-            if (this.avatar.getId() == 3) {
+            if (personnageAvatar == 3) {
                     contexte.drawImage(amongus, this.avatar.getX(), 400, 50, 50, null);
                 }
-            if (this.avatar.getId() == 4) {
+            if (personnageAvatar == 4) {
                     contexte.drawImage(ratchet, this.avatar.getX(), 400, 50, 50, null);
                 }
-            PreparedStatement requete2 = c.prepareStatement("SELECT id, x, y FROM joueur");
+            PreparedStatement requete2 = c.prepareStatement("SELECT id, personnage, x, y FROM joueur");
             ResultSet resultat = requete2.executeQuery();
             while (resultat.next()) {
                 int idjoueur = resultat.getInt("id");
+                int personnageJoueur = resultat.getInt("personnage");
                 int abscisse = resultat.getInt("x");
                 int ordonnee = resultat.getInt("y");
 //                if (idjoueur == 1 && this.avatar.getId() != 1) {
 //                    contexte.drawImage(mario, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
 //                }
-                if (idjoueur == 2 && this.avatar.getId() != 2){
+                if (personnageJoueur == 1 && idjoueur!=this.avatar.getId()){
+                    contexte.drawImage(mario, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
+                }
+                if (personnageJoueur == 2 && idjoueur!=this.avatar.getId()){
                     contexte.drawImage(steve, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
                 }
-                if (idjoueur == 3 && this.avatar.getId() != 3){
+                if (personnageJoueur == 3 && idjoueur!=this.avatar.getId()){
                     contexte.drawImage(amongus, abscisse, ordonnee + this.avatar.getYmap(), 50, 50, null);
                 }
-                if (idjoueur == 4 && this.avatar.getId() != 4){
+                if (personnageJoueur == 4 && idjoueur!=this.avatar.getId()){
                     contexte.drawImage(ratchet, abscisse, ordonnee+this.avatar.getYmap() , 50, 50, null);
                 }
             }

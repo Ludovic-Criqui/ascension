@@ -17,6 +17,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
     private Avatar avatar;
     private SalonAttente salon;
     private Connection c;
+    private ChoixPerso choixPerso;
 
     /**
      * Creates new form AcceuilleFrame
@@ -30,8 +31,9 @@ public class AcceuilFrame extends javax.swing.JFrame {
         Icon icon = new ImageIcon("background1.png");
         this.salon = new SalonAttente(1,this.jeu); 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2 - this.getWidth()/2+50, dim.height/2 - this.getHeight()/2);
+        this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2-170);
         this.jLabel2.setVisible(false);
+        this.choixPerso = new ChoixPerso(jeu);
 //      Icon icon = new ImageIcon("background1.png");
 //      this.jButton2(icon);
     }
@@ -135,7 +137,8 @@ public class AcceuilFrame extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-
+        this.choixPerso.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

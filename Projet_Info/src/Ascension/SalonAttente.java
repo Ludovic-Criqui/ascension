@@ -190,16 +190,23 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         AcceuilFrame.getFrames()[0].setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
-        // TODO add your handling code here:
         this.fenetreJeu.setVisible(true);
         this.fenetreJeu.getJeu().avatar.setId(id);
+        try{
+            PreparedStatement requete = c.prepareStatement("UPDATE joueur SET personnage = ? WHERE id = ?");
+            requete.setInt(1,this.jeu.avatar.getPersonnage());
+            System.out.println(this.jeu.avatar.getPersonnage());
+            requete.setInt(2, this.id);
+            requete.executeUpdate();
+            requete.close();
+        }catch (SQLException ex) {
+            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -209,7 +216,7 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
         try{
             PreparedStatement requete = c.prepareStatement("UPDATE joueur SET pseudo = ? WHERE id = ?");
             requete.setString(1,this.saisi);
-            requete.setInt(2,this.id);
+            requete.setInt(2, this.id);
             requete.executeUpdate();
             requete.close();
         }catch (SQLException ex) {
