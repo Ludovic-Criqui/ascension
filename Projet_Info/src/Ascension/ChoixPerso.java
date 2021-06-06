@@ -7,6 +7,7 @@ package Ascension;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 
 /**
  *
@@ -19,13 +20,17 @@ public class ChoixPerso extends javax.swing.JFrame {
      */
     private Avatar avatar;
     private Jeu jeu;
-    private int choixPersonnage;
+    private static int choixPersonnage = 1;
     
-    public ChoixPerso(Jeu jeu3) {
+    public ChoixPerso(Jeu jeu3) throws IOException {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2);
-        this.jeu = jeu3;
+        this.jeu = jeu3;     
+    }
+
+    public static int getChoixPersonnage() {
+        return choixPersonnage;
     }
 
     /**
@@ -45,24 +50,28 @@ public class ChoixPerso extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("mario.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("steve.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("amongus.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
+        jButton4.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("ratchet.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -113,7 +122,7 @@ public class ChoixPerso extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.choixPersonnage=1;
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -122,8 +131,9 @@ public class ChoixPerso extends javax.swing.JFrame {
         this.setVisible(false);
         AcceuilFrame.getFrames()[0].setVisible(true);
         this.jeu.avatar.setPersonnage(choixPersonnage);
-        System.out.println(choixPersonnage);
-        System.out.println(this.jeu.avatar.getPersonnage());
+        AcceuilFrame.initialisationjButton3();
+//        System.out.println(choixPersonnage);
+//        System.out.println(this.jeu.avatar.getPersonnage());
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

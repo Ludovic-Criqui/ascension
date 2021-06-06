@@ -2,7 +2,7 @@ package Ascension;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,15 +19,15 @@ public class AcceuilFrame extends javax.swing.JFrame {
     private SalonAttente salon;
     private Connection c;
     private ChoixPerso choixPerso;
-    private Timer timer;
+    private int persoAffiche = 1;
 
     /**
      * Creates new form AcceuilleFrame
      */
-    public AcceuilFrame() {
-        initComponents();
+    public AcceuilFrame() throws IOException {
         this.fenetreJeu = new FenetreDeJeu();
         this.jeu = new Jeu();
+        initComponents();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         Icon icon = new ImageIcon("background1.png");
@@ -36,9 +36,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
         this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2-170);
         this.jLabel2.setVisible(false);
         this.choixPerso = new ChoixPerso(jeu);
-        //timer pour action performed  
-//        this.timer = new Timer(40, this);
-//        this.timer.start();
+        
 //      Icon icon = new ImageIcon("background1.png");
 //      this.jButton2(icon);
     }
@@ -76,6 +74,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("mario.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -133,35 +132,44 @@ public class AcceuilFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    static void initialisationjButton3() {
+        if (ChoixPerso.getChoixPersonnage() == 1){
+            jButton3.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("mario.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
+        }
+        if (ChoixPerso.getChoixPersonnage() == 2){
+            jButton3.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("steve.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
+        }
+        if (ChoixPerso.getChoixPersonnage() == 3){
+            jButton3.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("amongus.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
+        }
+        if (ChoixPerso.getChoixPersonnage() == 4){
+            jButton3.setIcon(new javax.swing.ImageIcon(((new javax.swing.ImageIcon("ratchet.png")).getImage()).getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH)));
+        }
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int compteur = 0;
         PreparedStatement requete;
-        this.jLabel2.setVisible(false);
         try {
-            requete = this.jeu.getC().prepareStatement("SELECT id FROM joueur");
-            ResultSet resultat = requete.executeQuery();
-            while (resultat.next()) {
-                compteur += 1;
-            }
+            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+            requete.executeUpdate();
             requete.close();
         } catch (SQLException ex) {
             Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (compteur == 0) {
-            this.salon.setId(1);
-            SalonAttente.getFrames()[2].setVisible(true);
-            this.salon.setBoutonVisible(true);
-            this.setVisible(false);
+        this.salon.setId(1);
+        SalonAttente.getFrames()[2].setVisible(true);
+        this.salon.setBoutonVisible(true);
+        try {
+            requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (pseudo,x,y) VALUES ('hote','140','100')");
+            requete.executeUpdate();
+            requete.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else {
-            this.jLabel2.setVisible(true);
-            this.jLabel2.setText("Une partie est déjà créée");
-        }
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        this.jLabel2.setVisible(false);
         this.choixPerso.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -169,7 +177,6 @@ public class AcceuilFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int compteur = 0;
         PreparedStatement requete;
-        this.jLabel2.setVisible(false);
         try {
             requete = this.jeu.getC().prepareStatement("SELECT id FROM joueur");
             ResultSet resultat = requete.executeQuery();
@@ -181,7 +188,8 @@ public class AcceuilFrame extends javax.swing.JFrame {
             Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (compteur != 0) {
-            this.salon.setId(compteur+1);
+            this.jButton2.setEnabled(false);
+            this.salon.setId(2);
             SalonAttente.getFrames()[2].setVisible(true);
             this.salon.setBoutonVisible(false);
             this.setVisible(false);
@@ -189,9 +197,9 @@ public class AcceuilFrame extends javax.swing.JFrame {
         }
         else {
             this.jLabel2.setVisible(true);
-            this.jLabel2.setText("Il n'y a pas de partie créée");
+            this.jLabel2.setText("La partie est déjà crée");
         }
-            
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -235,7 +243,11 @@ public class AcceuilFrame extends javax.swing.JFrame {
             public void run() {
                 final ImageIcon icon = new ImageIcon("mario.png");
                 Image img = icon.getImage();
-                new AcceuilFrame().setVisible(true);
+                try {
+                    new AcceuilFrame().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
 
@@ -245,21 +257,11 @@ public class AcceuilFrame extends javax.swing.JFrame {
     public FenetreDeJeu getFenetreJeu() {
         return fenetreJeu;
     }
-    
-//    public void actionPerformed(ActionEvent arg0){
-//        new javax.swing.ImageIcon(getClass().getResource("/Ascension/images/mario.png"));
-//        if(this.jeu.avatar.getPersonnage()==1){
-//            
-//            
-//        }
-//        this.jButton3.setIcon();
-//        }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private static javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

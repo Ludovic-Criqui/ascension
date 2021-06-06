@@ -190,9 +190,17 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        PreparedStatement requete;
+        try {
+            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+            requete.executeUpdate();
+            requete.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         AcceuilFrame.getFrames()[0].setVisible(true);
         this.setVisible(false);
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
