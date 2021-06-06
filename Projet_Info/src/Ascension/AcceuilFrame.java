@@ -2,6 +2,7 @@ package Ascension;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
     private SalonAttente salon;
     private Connection c;
     private ChoixPerso choixPerso;
+    private Timer timer;
 
     /**
      * Creates new form AcceuilleFrame
@@ -34,6 +36,9 @@ public class AcceuilFrame extends javax.swing.JFrame {
         this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2-170);
         this.jLabel2.setVisible(false);
         this.choixPerso = new ChoixPerso(jeu);
+        //timer pour action performed  
+//        this.timer = new Timer(40, this);
+//        this.timer.start();
 //      Icon icon = new ImageIcon("background1.png");
 //      this.jButton2(icon);
     }
@@ -129,14 +134,34 @@ public class AcceuilFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.salon.setId(1);
-        SalonAttente.getFrames()[2].setVisible(true);
-        this.salon.setBoutonVisible(true);
-        this.setVisible(false);
+        int compteur = 0;
+        PreparedStatement requete;
+        this.jLabel2.setVisible(false);
+        try {
+            requete = this.jeu.getC().prepareStatement("SELECT id FROM joueur");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                compteur += 1;
+            }
+            requete.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (compteur == 0) {
+            this.salon.setId(1);
+            SalonAttente.getFrames()[2].setVisible(true);
+            this.salon.setBoutonVisible(true);
+            this.setVisible(false);
+        }
+        else {
+            this.jLabel2.setVisible(true);
+            this.jLabel2.setText("Une partie est déjà créée");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        this.jLabel2.setVisible(false);
         this.choixPerso.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -144,6 +169,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int compteur = 0;
         PreparedStatement requete;
+        this.jLabel2.setVisible(false);
         try {
             requete = this.jeu.getC().prepareStatement("SELECT id FROM joueur");
             ResultSet resultat = requete.executeQuery();
@@ -155,8 +181,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
             Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (compteur != 0) {
-            this.jButton2.setEnabled(false);
-            this.salon.setId(2);
+            this.salon.setId(compteur+1);
             SalonAttente.getFrames()[2].setVisible(true);
             this.salon.setBoutonVisible(false);
             this.setVisible(false);
@@ -164,9 +189,9 @@ public class AcceuilFrame extends javax.swing.JFrame {
         }
         else {
             this.jLabel2.setVisible(true);
-            this.jLabel2.setText("La partie est déjà crée");
+            this.jLabel2.setText("Il n'y a pas de partie créée");
         }
-
+            
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -220,6 +245,15 @@ public class AcceuilFrame extends javax.swing.JFrame {
     public FenetreDeJeu getFenetreJeu() {
         return fenetreJeu;
     }
+    
+//    public void actionPerformed(ActionEvent arg0){
+//        new javax.swing.ImageIcon(getClass().getResource("/Ascension/images/mario.png"));
+//        if(this.jeu.avatar.getPersonnage()==1){
+//            
+//            
+//        }
+//        this.jButton3.setIcon();
+//        }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

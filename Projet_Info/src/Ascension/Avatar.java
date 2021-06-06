@@ -22,7 +22,7 @@ public class Avatar {
     private int timerSaut = 5;
     private boolean aSaute;
     private String pseudo;
-
+    private int partie;
    
 
     public Avatar() {
@@ -77,6 +77,16 @@ public class Avatar {
     public void setY(int y) {
         this.y = y;
     }
+
+    public int getPartie() {
+        return partie;
+    }
+
+    public void setPartie(int partie) {
+        this.partie = partie;
+    }
+    
+    
 
     public int getX() {
         return x;
