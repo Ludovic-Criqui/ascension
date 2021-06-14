@@ -39,6 +39,7 @@ public class Carte {
         int nbLignes = 0;
         int nbColonnes = 0;
         int[][] tableau = new int[nbLignes][nbColonnes];
+        System.out.println(tableau);
         try {
             String ligne;
             BufferedReader fichier = new BufferedReader(new FileReader(nomFichier));

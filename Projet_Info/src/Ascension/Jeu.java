@@ -62,7 +62,7 @@ public class Jeu {
         try {
             PreparedStatement requete = c.prepareStatement("UPDATE joueur SET x = ?, y = ? WHERE id = ?");
             requete.setInt(1, this.avatar.getX());
-            requete.setInt(2, this.avatar.getY());
+            requete.setInt(2, this.avatar.getYmap());
             requete.setInt(3, this.avatar.getId());
 //            System.out.println(regles.gagneTotalement(this.avatar));
 //            System.out.println(regles.gagneTemporairement(this.avatar));
@@ -126,20 +126,22 @@ public class Jeu {
                 int personnageJoueur = resultat.getInt("personnage");
                 int abscisse = resultat.getInt("x");
                 int ordonnee = resultat.getInt("y");
+                System.out.println(abscisse);
+                System.out.println(ordonnee);
 //                if (idjoueur == 1 && this.avatar.getId() != 1) {
 //                    contexte.drawImage(mario, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
 //                }
                 if (personnageJoueur == 1 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(mario, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
+                    contexte.drawImage(mario, abscisse,this.avatar.getYmap()-ordonnee, 50, 50, null);
                 }
                 if (personnageJoueur == 2 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(steve, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
+                    contexte.drawImage(steve, abscisse, this.avatar.getYmap()-ordonnee, 50, 50, null);
                 }
                 if (personnageJoueur == 3 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(amongus, abscisse, ordonnee + this.avatar.getYmap(), 50, 50, null);
+                    contexte.drawImage(amongus, abscisse, this.avatar.getYmap()-ordonnee, 50, 50, null);
                 }
                 if (personnageJoueur == 4 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(ratchet, abscisse, ordonnee+this.avatar.getYmap() , 50, 50, null);
+                    contexte.drawImage(ratchet, abscisse, this.avatar.getYmap()-ordonnee , 50, 50, null);
                 }
             }
             requete2.close();

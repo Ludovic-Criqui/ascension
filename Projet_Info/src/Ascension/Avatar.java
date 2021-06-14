@@ -15,7 +15,7 @@ public class Avatar {
     private int Ymap = -1440;
     private BufferedImage mario, steve, amongus, ratchet;
     private boolean gauche, droite, haut, bas, saut;
-    private int id = 1;
+    private int id = 2;
     private int personnage=1;
     private long date;
     private long dateLimite;
@@ -38,7 +38,7 @@ public class Avatar {
             Logger.getLogger(Avatar.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.x = 120;
-        this.y = 145;
+        this.y = 0;
         // this.id = ;
         this.gauche = false;
         this.droite = false;
@@ -114,7 +114,9 @@ public class Avatar {
     }
 
     public int getY() {
+        
         return y;
+        
     }
 
     public int getPersonnage() {
@@ -134,6 +136,7 @@ public class Avatar {
 
         if (Ymap < -1440) {
             Ymap = -1440;
+            
         }
 
         if (Ymap > 385) {
@@ -159,6 +162,7 @@ public class Avatar {
             }
 
         }
+//        System.out.println(Ymap);
     }
 
     public void rendu(Graphics2D contexte) {
