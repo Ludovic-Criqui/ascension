@@ -38,8 +38,8 @@ public class Règles {
         this.avatar = avatar;
         this.carte = carte;
 //        this.listeSolide = new int[]{72, 73, 74, 84, 85, 86, 87, 128, 129, 130, 131, 132, 134, 135, 146, 147, 148, 149, 150, 152, 153, 156, 157, 158, 159, 160, 162, 163, 164, 165, 170, 171, 172, 173, 174, 175, 176, 177, 178, 180, 181, 182, 183, 186, 187, 188, 189, 190, 191, 192, 193, 195, 196, 197, 199, 200, 201, 204, 205, 206, 209, 210, 211, 213, 214, 215, 218, 219, 222, 223, 228, 229, 232, 233};
-        this.ligneFinX=500;
-        this.ligneFinY=500;
+        this.ligneFinX=200;
+        this.ligneFinY=-1300;
     } 
     
     
@@ -51,14 +51,23 @@ public class Règles {
     }
     
     public boolean gagneTotalement(Avatar avatar){
-        if ((avatar.getY()<=ligneFinY && avatar.getY()<=ligneFinX) || (personneEnVie==1 && avatar.getVie()>0)){
+        this.ligneFinX=33;
+        this.ligneFinY=382;
+        if ((avatar.getYmap()>=ligneFinY && avatar.getX()<=ligneFinX) || (personneEnVie==1 && avatar.getVie()>0)){
+//            System.out.println((avatar.getYmap()>=ligneFinY && avatar.getYmap()>=ligneFinX));
+//            System.out.println((personneEnVie==1 && avatar.getVie()>0));
+//            System.out.println(ligneFinX);
+//            System.out.println(ligneFinY);
+            System.out.println(avatar.getYmap());
             return true;
         }
         return false;
     }
     
     public boolean gagneTemporairement(Avatar avatar){
-        if (avatar.getY()<=ligneFinY){
+        this.ligneFinX=1089;
+        this.ligneFinY=382;
+        if (avatar.getYmap()>=ligneFinY && avatar.getX()<=ligneFinX){
             return true;
         }
         return false;

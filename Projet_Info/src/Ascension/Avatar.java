@@ -15,7 +15,7 @@ public class Avatar {
     private int Ymap = -1440;
     private BufferedImage mario, steve, amongus, ratchet;
     private boolean gauche, droite, haut, bas, saut;
-    private int id = 2;
+    private int id = 1;
     private int personnage=1;
     private long date;
     private long dateLimite;
@@ -26,7 +26,7 @@ public class Avatar {
     private int etat;
     private Attaque attaque;
     private int partie;
-   
+   private int podium;
 
     public Avatar() {
         try {
@@ -51,6 +51,7 @@ public class Avatar {
         aSaute = false;
         dateLimite = 0;
         this.partie=0;
+        this.podium=2;
     }
     
     public void setPersonnage(int personnage) {
@@ -107,6 +108,14 @@ public class Avatar {
 
     public void setEtat(int etat) {
         this.etat = etat;
+    }
+
+    public int getPodium() {
+        return podium;
+    }
+
+    public void setPodium(int podium) {
+        this.podium = podium;
     }
     
     public int getX() {

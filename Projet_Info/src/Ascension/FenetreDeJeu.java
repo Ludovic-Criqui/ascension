@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +71,9 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
         } catch (InterruptedException ex) {
             Logger.getLogger(FenetreDeJeu.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
         this.jeu.rendu(contexte);
+        
         this.jLabel1.repaint();
     }
 
