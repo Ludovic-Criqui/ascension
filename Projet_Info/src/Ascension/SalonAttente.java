@@ -200,25 +200,35 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
 //        }
         PreparedStatement requete;
         if (this.id==1){
-            try {
-                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
-                requete.executeUpdate();
-                requete.close();
-            } catch (SQLException ex) {
+            try{
+                PreparedStatement requete3 = c.prepareStatement("UPDATE joueur SET partie = -1 WHERE id = 1");
+                requete3.executeUpdate();
+                requete3.close();
+            }catch (SQLException ex) {
                 Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
+        }
+        if (this.id!=1){
+//            try {
+//                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+//                requete.executeUpdate();
+//                requete.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } else {
             try {
-                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur ");
 //                requete.setInt(1, this.id);
                 requete.executeUpdate();
                 requete.close();
             } catch (SQLException ex) {
                 Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
             }
+            AcceuilFrame.getFrames()[0].setVisible(true);
+            this.setVisible(false);
         }
-        AcceuilFrame.getFrames()[0].setVisible(true);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -349,6 +359,18 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
                     if (resultatPartie==1){
                         this.setVisible(false);
                         this.fenetreJeu.setVisible(true);
+                    }
+                    if (resultatPartie==-1){
+                        AcceuilFrame.getFrames()[0].setVisible(true);
+                        this.setVisible(false);
+                        try {
+                            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+                            requete.executeUpdate();
+                            requete.close();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
                     }
                 }
 //                String partieJ = resultat.getString("partie");

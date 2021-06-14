@@ -13,9 +13,9 @@ public class TestUpdate {
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20202021_s2_vs2_tp1_ascension?serverTimezone=UTC", "etudiant", "YTDTvj9TR3CDYCmP");
 
-            PreparedStatement requete = connexion.prepareStatement("UPDATE joueur SET pseudo = ? WHERE id = ?");
-            requete.setString(1, "joueur2");
-            requete.setDouble(2, 2);
+            PreparedStatement requete = connexion.prepareStatement("UPDATE joueur SET partie = 0 WHERE id = 1");
+//            requete.setString(1, "joueur2");
+//            requete.setDouble(2, 2);
             System.out.println(requete);
             requete.executeUpdate();
 

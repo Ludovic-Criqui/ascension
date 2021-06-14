@@ -15,7 +15,7 @@ public class TestSelectAll{
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20202021_s2_vs2_tp1_ascension?serverTimezone=UTC", "etudiant", "YTDTvj9TR3CDYCmP");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT * FROM joueur WHERE id = 1");
+            PreparedStatement requete = connexion.prepareStatement("SELECT * FROM joueur ");
             ResultSet resultat = requete.executeQuery();
             OutilsJDBC.afficherResultSet(resultat);
 
