@@ -22,7 +22,10 @@ public class Avatar {
     private int timerSaut = 5;
     private boolean aSaute;
     private String pseudo;
-
+    private int vie;
+    private int etat;
+    private Attaque attaque;
+    private int partie;
    
 
     public Avatar() {
@@ -42,8 +45,12 @@ public class Avatar {
         this.haut = false;
         this.bas = false;
         this.saut = false;
+        this.vie=3;
+        this.etat=0;
+        this.attaque = new Attaque();
         aSaute = false;
         dateLimite = 0;
+        this.partie=0;
     }
     
     public void setPersonnage(int personnage) {
@@ -78,6 +85,30 @@ public class Avatar {
         this.y = y;
     }
 
+    public int getVie() {
+        return vie;
+    }
+
+    public void setVie(int vie) {
+        this.vie = vie;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public int getPartie() {
+        return partie;
+    }
+
+    public void setPartie(int partie) {
+        this.partie = partie;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
+    }
+    
     public int getX() {
         return x;
     }

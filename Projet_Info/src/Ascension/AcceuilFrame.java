@@ -148,25 +148,49 @@ public class AcceuilFrame extends javax.swing.JFrame {
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int compteur = 0;
         PreparedStatement requete;
+        this.jLabel2.setVisible(false);
         try {
-            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
-            requete.executeUpdate();
+            requete = this.jeu.getC().prepareStatement("SELECT id FROM joueur");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                compteur += 1;
+            }
             requete.close();
         } catch (SQLException ex) {
             Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.salon.setId(1);
-        SalonAttente.getFrames()[2].setVisible(true);
-        this.salon.setBoutonVisible(true);
-        try {
-            requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (pseudo,x,y) VALUES ('hote','140','100')");
-            requete.executeUpdate();
-            requete.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+        if (compteur == 0) {
+            this.salon.setId(1);
+            SalonAttente.getFrames()[2].setVisible(true);
+            this.salon.setBoutonVisible(true);
+            this.setVisible(false);
+            try {
+                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,x,y) VALUES ('1','hote','140','100')");
+                requete.executeUpdate();
+                requete.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
         }
-        this.setVisible(false);
+        else {
+            this.jLabel2.setVisible(true);
+            this.jLabel2.setText("Une partie est déjà créée");
+        }
+//        try {
+//            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+//            requete.executeUpdate();
+//            requete.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        this.salon.setId(1);
+//        SalonAttente.getFrames()[2].setVisible(true);
+//        this.salon.setBoutonVisible(true);
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -188,16 +212,27 @@ public class AcceuilFrame extends javax.swing.JFrame {
             Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (compteur != 0) {
-            this.jButton2.setEnabled(false);
-            this.salon.setId(2);
+//            this.jButton2.setEnabled(false);
+            this.salon.setId(compteur+1);
+//            this.avatar.setId(compteur+1);
+//            System.out.println(this.avatar.getId());
             SalonAttente.getFrames()[2].setVisible(true);
             this.salon.setBoutonVisible(false);
             this.setVisible(false);
             this.jLabel2.setVisible(false);
+            String idVal = String.valueOf(compteur+1);
+            try {
+                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,x,y) VALUES (?,'invité','140','100')");
+                requete.setString(1, idVal);
+                requete.executeUpdate();
+                requete.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else {
             this.jLabel2.setVisible(true);
-            this.jLabel2.setText("La partie est déjà crée");
+            this.jLabel2.setText("Aucune partie n'est créée");
         }
 
 

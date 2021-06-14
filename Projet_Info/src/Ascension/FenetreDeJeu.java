@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -22,20 +23,22 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     private JLabel jLabel1;
     private Jeu jeu;
     private Timer timer;
+    private Règles regles;
     private int[] listeSolide;
 
     public FenetreDeJeu() {
         // Creation du jeu
         this.jeu = new Jeu();
         // initialisation de la fenetre
-        this.setSize(1312, 1952);
+        this.setSize(1280, 1280);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(this);
         this.jLabel1 = new JLabel();
-        this.jLabel1.setPreferredSize(new java.awt.Dimension(1312, 1952));
+        this.jLabel1.setPreferredSize(new java.awt.Dimension(1280, 1280));
         this.setContentPane(this.jLabel1);
         this.pack();
+//        this.regles=this.jeu.regles;
         this.listeSolide = new int[]{72, 73, 74, 84, 85, 86, 87, 128, 129, 130, 131, 132, 134, 135, 146, 147, 148, 149, 150, 152, 153, 156, 157, 158, 159, 160, 162, 163, 164, 165, 170, 171, 172, 173, 174, 175, 176, 177, 178, 180, 181, 182, 183, 186, 187, 188, 189, 190, 191, 192, 193, 195, 196, 197, 199, 200, 201, 204, 205, 206, 209, 210, 211, 213, 214, 215, 218, 219, 222, 223, 228, 229, 232, 233};
     
         // Creation du buffer pour l'affichage du jeu et recuperation du contexte graphique
@@ -59,6 +62,11 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     public void actionPerformed(ActionEvent e) {
         try {
             this.jeu.miseAJour();
+////            if (this.jeu.avatar.getVie()==0){   // pour afficher image nombre vie
+//                ImageIcon icon = new ImageIcon("tileset.png");
+//                jLabel1.add(new JLabel(icon));
+//                jLabel1.setVisible(true);
+////            }
         } catch (InterruptedException ex) {
             Logger.getLogger(FenetreDeJeu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,6 +118,32 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
             this.jeu.avatar.setSaut(false);
         }        
     }
+    
+//    @Override
+//    public void actionPerformed(ActionEvent arg0){
+//        if(this.isVisible()){
+//            String[] listeDesJoueurs = new String[4];
+//            PreparedStatement requete;
+//            int i =0;
+//            try {
+//                requete = c.prepareStatement("SELECT pseudo FROM joueur");
+//                ResultSet resultat = requete.executeQuery();
+//                while(resultat.next()){
+//                    String pseudoJ = resultat.getString("pseudo");
+//                    listeDesJoueurs[i] = pseudoJ;
+//                    i+=1;
+//                    jList1.setModel(new javax.swing.AbstractListModel<String>() {
+//
+//                    public int getSize() { return listeDesJoueurs.length; }
+//                    public String getElementAt(int i) { return listeDesJoueurs[i]; }
+//                    });
+//                }
+//                requete.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
 
     /**
      * @param args the command line arguments

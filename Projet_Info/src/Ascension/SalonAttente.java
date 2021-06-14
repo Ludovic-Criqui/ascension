@@ -190,33 +190,65 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        PreparedStatement requete;
-        try {
-            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
-            requete.executeUpdate();
-            requete.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
+//        try {
+//            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+//            requete.executeUpdate();
+//            requete.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        PreparedStatement requete;
+        if (this.id==1){
+            try {
+                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+                requete.executeUpdate();
+                requete.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
+//                requete.setInt(1, this.id);
+                requete.executeUpdate();
+                requete.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         AcceuilFrame.getFrames()[0].setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.fenetreJeu.setVisible(true);
         this.fenetreJeu.getJeu().avatar.setId(id);
+        this.fenetreJeu.getJeu().avatar.setPartie(1);
         try{
-            PreparedStatement requete = c.prepareStatement("UPDATE joueur SET personnage = ? WHERE id = ?");
+            PreparedStatement requete = c.prepareStatement("UPDATE joueur SET personnage = ?, partie = ? WHERE id = ?");
             requete.setInt(1,this.jeu.avatar.getPersonnage());
             System.out.println(this.jeu.avatar.getPersonnage());
             requete.setInt(2, this.id);
+            requete.setInt(3, this.id);
             requete.executeUpdate();
             requete.close();
         }catch (SQLException ex) {
             Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.setVisible(false);
+        }  
+        
+//        try{
+//            PreparedStatement requete = c.prepareStatement("UPDATE joueur SET personnage = ? WHERE id = ?");
+//            requete.setInt(1,this.jeu.avatar.getPersonnage());
+//            System.out.println(this.jeu.avatar.getPersonnage());
+//            requete.setInt(2, this.id);
+//            requete.executeUpdate();
+//            requete.close();
+//        }catch (SQLException ex) {
+//            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+//        this.setVisible(false);
+//        this.fenetreJeu.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -232,6 +264,7 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
             Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println(this.saisi);   
+        System.out.println(this.id);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -279,13 +312,14 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
 
     public void setId(int id) {
         this.id = id;
+//        this.avatar.setId(id);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent arg0){
         if(this.isVisible()){
-            String[] listeDesJoueurs = new String[4];
+            String[] listeDesJoueurs = new String[10];
             PreparedStatement requete;
             int i =0;
             try {
@@ -305,7 +339,26 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
             } catch (SQLException ex) {
                 Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
             }
+            PreparedStatement requete2;
+            try {
+                requete2 = c.prepareStatement("SELECT partie FROM joueur WHERE id = 1");
+                ResultSet resultat = requete2.executeQuery();
+                while (resultat.next()){
+                    int resultatPartie = resultat.getInt("partie");
+                    System.out.println(resultatPartie);
+                    if (resultatPartie==1){
+                        this.setVisible(false);
+                        this.fenetreJeu.setVisible(true);
+                    }
+                }
+//                String partieJ = resultat.getString("partie");
+//                System.out.println(partieJ);
+                requete2.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

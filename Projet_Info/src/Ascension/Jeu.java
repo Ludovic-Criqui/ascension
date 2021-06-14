@@ -15,11 +15,12 @@ import java.sql.SQLException;
 
 public class Jeu {
 
-    private BufferedImage mario, steve, amongus, ratchet;
+    private BufferedImage mario, steve, amongus, ratchet, vie,mort;
     public Avatar avatar;
     private Connection c;
     private Carte carte;
     private int personnageAvatar;
+    private Règles regles;
 
     public Jeu() {
         try {
@@ -33,10 +34,13 @@ public class Jeu {
             this.steve = ImageIO.read(new File("steve.png"));
             this.amongus = ImageIO.read(new File("amongus.png"));
             this.ratchet = ImageIO.read(new File("ratchet.png"));
+//            this.vie = ImageIO.read(new File("vie.png"));
+            this.mort = ImageIO.read(new File("mort.jpg"));
         } catch (IOException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.avatar = new Avatar();
+        this.regles=new Règles();
     }
 
     public Connection getC() {
@@ -49,6 +53,7 @@ public class Jeu {
 
     public void miseAJour() throws InterruptedException {
         this.avatar.miseAJour();
+//        if (this.regles.gagneTotalement(this.avatar)==true)
     }
 
     public void rendu(Graphics2D contexte) {
@@ -59,6 +64,16 @@ public class Jeu {
             requete.setInt(1, this.avatar.getX());
             requete.setInt(2, this.avatar.getY());
             requete.setInt(3, this.avatar.getId());
+//            System.out.println(regles.gagneTotalement(this.avatar));
+//            System.out.println(regles.gagneTemporairement(this.avatar));
+            if (regles.gagneTotalement(this.avatar)){
+                contexte.drawImage(mario, this.avatar.getX(), 400, 100, 100, null);
+            }
+            else if (regles.gagneTemporairement(this.avatar)) {
+                contexte.drawImage(mario, this.avatar.getX(), 400, 100, 100, null);
+            }
+//            System.out.println(this.avatar.getX());
+//            System.out.println(this.avatar.getY());
             requete.executeUpdate();
             requete.close();
         } catch (SQLException ex) {
@@ -88,6 +103,21 @@ public class Jeu {
             if (personnageAvatar == 4) {
                     contexte.drawImage(ratchet, this.avatar.getX(), 400, 50, 50, null);
                 }
+            try {
+                int nombreVie1=this.avatar.getVie();
+                String nombreVie2=String.valueOf(nombreVie1);
+                String nombreVie3="vie".concat(nombreVie2);
+                String nombreVie5=nombreVie3.concat(".png");
+                this.vie = ImageIO.read(new File(nombreVie5));
+                if (nombreVie1==0){
+                    contexte.drawImage(mort, 200, 200, 400, 400, null);
+                }
+                else {
+                    contexte.drawImage(this.vie, 30, 250, 50, 15, null);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+            }
             PreparedStatement requete2 = c.prepareStatement("SELECT id, personnage, x, y FROM joueur");
             ResultSet resultat = requete2.executeQuery();
             while (resultat.next()) {
