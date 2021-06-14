@@ -359,10 +359,16 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
                     if (resultatPartie==1){
                         this.setVisible(false);
                         this.fenetreJeu.setVisible(true);
+                        try{
+                            PreparedStatement requete4 = c.prepareStatement("UPDATE joueur SET partie = 0 WHERE id = 1");
+                            requete4.executeUpdate();
+                            requete4.close();
+                        }catch (SQLException ex) {
+                            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                     if (resultatPartie==-1){
-                        AcceuilFrame.getFrames()[0].setVisible(true);
-                        this.setVisible(false);
+                        
                         try {
                             requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
                             requete.executeUpdate();
@@ -370,6 +376,8 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
                         } catch (SQLException ex) {
                             Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        AcceuilFrame.getFrames()[0].setVisible(true);
+                        this.setVisible(false);
                         
                     }
                 }

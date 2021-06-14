@@ -90,6 +90,21 @@ public class Jeu {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
+            int nombreVie1=this.avatar.getVie();
+            String nombreVie2=String.valueOf(nombreVie1);
+            String nombreVie3="vie".concat(nombreVie2);
+            String nombreVie5=nombreVie3.concat(".png");
+            this.vie = ImageIO.read(new File(nombreVie5));
+            if (nombreVie1==0){
+                contexte.drawImage(this.mort, 200, 200, 400, 400, null);
+            }
+            else {
+                contexte.drawImage(this.vie, 30, 250, 50, 15, null);
+            }
+            } catch (IOException ex) {
+                Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        try {
             
             if (personnageAvatar == 1) {
                     contexte.drawImage(mario, this.avatar.getX(), 400, 50, 50, null);
@@ -103,21 +118,7 @@ public class Jeu {
             if (personnageAvatar == 4) {
                     contexte.drawImage(ratchet, this.avatar.getX(), 400, 50, 50, null);
                 }
-            try {
-                int nombreVie1=this.avatar.getVie();
-                String nombreVie2=String.valueOf(nombreVie1);
-                String nombreVie3="vie".concat(nombreVie2);
-                String nombreVie5=nombreVie3.concat(".png");
-                this.vie = ImageIO.read(new File(nombreVie5));
-                if (nombreVie1==0){
-                    contexte.drawImage(mort, 200, 200, 400, 400, null);
-                }
-                else {
-                    contexte.drawImage(this.vie, 30, 250, 50, 15, null);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
             PreparedStatement requete2 = c.prepareStatement("SELECT id, personnage, x, y FROM joueur");
             ResultSet resultat = requete2.executeQuery();
             while (resultat.next()) {

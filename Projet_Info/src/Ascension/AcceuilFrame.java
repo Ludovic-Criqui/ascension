@@ -167,7 +167,8 @@ public class AcceuilFrame extends javax.swing.JFrame {
             this.salon.setBoutonVisible(true);
             this.setVisible(false);
             try {
-                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,x,y) VALUES ('1','hote','140','100')");
+                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,personnage,x,y) VALUES ('1','hote',?,'140','100')");
+                requete.setInt(1, this.jeu.avatar.getPersonnage());
                 requete.executeUpdate();
                 requete.close();
             } catch (SQLException ex) {
@@ -222,8 +223,10 @@ public class AcceuilFrame extends javax.swing.JFrame {
             this.jLabel2.setVisible(false);
             String idVal = String.valueOf(compteur+1);
             try {
-                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,x,y) VALUES (?,'invité','140','100')");
+                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,personnage,x,y) VALUES (?,'invité',?,'140','100')");
                 requete.setString(1, idVal);
+                System.out.println(this.jeu.avatar.getPersonnage());
+                requete.setInt(2, this.jeu.avatar.getPersonnage());
                 requete.executeUpdate();
                 requete.close();
             } catch (SQLException ex) {
