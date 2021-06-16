@@ -320,11 +320,6 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
 
     public void setId(int id) {
         this.id = id;
-        System.out.println("____________________________________________________________________");
-        System.out.println(id);
-        System.out.println(this.id);
-        
-        
 //        this.avatar.setId(id);
     }
 

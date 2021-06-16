@@ -13,9 +13,6 @@ import java.util.logging.Logger;
 
 public class AcceuilFrame extends javax.swing.JFrame {
 
-    private FenetreDeJeu fenetreJeu;
-    private Jeu jeu;
-    private Avatar avatar;
     private SalonAttente salon;
     private Connection c;
     private ChoixPerso choixPerso;
@@ -25,17 +22,16 @@ public class AcceuilFrame extends javax.swing.JFrame {
      * Creates new form AcceuilleFrame
      */
     public AcceuilFrame() throws IOException {
-        this.fenetreJeu = new FenetreDeJeu();
-        this.jeu = new Jeu();
+
         initComponents();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         Icon icon = new ImageIcon("background1.png");
-        this.salon = new SalonAttente(1,this.jeu); 
+        this.salon = new SalonAttente(1); 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2-170);
         this.jLabel2.setVisible(false);
-        this.choixPerso = new ChoixPerso(jeu);
+        this.choixPerso = new ChoixPerso(this.salon.getFenetreJeu().getJeu());
         
 //      Icon icon = new ImageIcon("background1.png");
 //      this.jButton2(icon);
@@ -152,7 +148,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
         PreparedStatement requete;
         this.jLabel2.setVisible(false);
         try {
-            requete = this.jeu.getC().prepareStatement("SELECT id FROM joueur");
+            requete = this.salon.getFenetreJeu().getJeu().getC().prepareStatement("SELECT id FROM joueur");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 compteur += 1;
@@ -162,19 +158,22 @@ public class AcceuilFrame extends javax.swing.JFrame {
             Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (compteur == 0) {
+            
             this.salon.setId(1);
-            SalonAttente.getFrames()[2].setVisible(true);
+            this.salon.getFenetreJeu().getJeu().avatar.setId(1);
+//            SalonAttente.getFrames()[2].setVisible(true);
             this.salon.setBoutonVisible(true);
             this.setVisible(false);
             try {
-                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,personnage,x,y) VALUES ('1','hote',?,'140','100')");
-                requete.setInt(1, this.jeu.avatar.getPersonnage());
+                requete = this.salon.getFenetreJeu().getJeu().getC().prepareStatement("INSERT INTO joueur (id,pseudo,personnage,x,y) VALUES ('1','hote',?,'140','100')");
+                requete.setInt(1, this.salon.getFenetreJeu().getJeu().avatar.getPersonnage());
                 requete.executeUpdate();
                 requete.close();
             } catch (SQLException ex) {
                 Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.setVisible(false);
+            this.salon.setVisible(true);
         }
         else {
             this.jLabel2.setVisible(true);
@@ -203,7 +202,7 @@ public class AcceuilFrame extends javax.swing.JFrame {
         int compteur = 0;
         PreparedStatement requete;
         try {
-            requete = this.jeu.getC().prepareStatement("SELECT id FROM joueur");
+            requete = this.salon.getFenetreJeu().getJeu().getC().prepareStatement("SELECT id FROM joueur");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 compteur += 1;
@@ -214,26 +213,27 @@ public class AcceuilFrame extends javax.swing.JFrame {
         }
         if (compteur != 0) {
 //            this.jButton2.setEnabled(false);
-            this.salon.setId(compteur+1);
-//            this.avatar.setId(compteur+1);
-//            System.out.println(this.avatar.getId());
-            SalonAttente.getFrames()[2].setVisible(true);
+            // this.salon.setId(compteur+1);
+            System.out.println("compteur");
+            System.out.println(compteur);
+            this.salon.getFenetreJeu().getJeu().avatar.setId(compteur+1);
+            System.out.println(this.salon.getFenetreJeu().getJeu().avatar.getId());
+//            SalonAttente.getFrames()[2].setVisible(true);
             this.salon.setBoutonVisible(false);
             this.setVisible(false);
             this.jLabel2.setVisible(false);
             String idVal = String.valueOf(compteur+1);
-            System.out.println("----------------------------------------------------------------------------");
-            System.out.println(idVal);
             try {
-                requete = this.jeu.getC().prepareStatement("INSERT INTO joueur (id,pseudo,personnage,x,y) VALUES (?,'invité',?,'140','-1440')");
+                requete = this.salon.getFenetreJeu().getJeu().getC().prepareStatement("INSERT INTO joueur (id,pseudo,personnage,x,y) VALUES (?,'invité',?,'140','100')");
                 requete.setString(1, idVal);
-                System.out.println(this.jeu.avatar.getPersonnage());
-                requete.setInt(2, this.jeu.avatar.getPersonnage());
+                System.out.println(this.salon.getFenetreJeu().getJeu().avatar.getPersonnage());
+                requete.setInt(2, this.salon.getFenetreJeu().getJeu().avatar.getPersonnage());
                 requete.executeUpdate();
                 requete.close();
             } catch (SQLException ex) {
                 Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
+            this.salon.setVisible(true);
         }
         else {
             this.jLabel2.setVisible(true);
@@ -294,9 +294,6 @@ public class AcceuilFrame extends javax.swing.JFrame {
         });
     }
 
-    public FenetreDeJeu getFenetreJeu() {
-        return fenetreJeu;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
