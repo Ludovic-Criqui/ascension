@@ -87,11 +87,18 @@ public class Jeu {
                 int autreId = resultat4.getInt("id");
                 System.out.println(autreId);
                 PreparedStatement requete5 = c.prepareStatement("UPDATE joueur SET podium = ? WHERE id = ?");
-                requete5.setInt(1, compteur);
-                requete5.setInt(2, autreId);
-                requete5.executeUpdate();
-                requete5.close();
-                compteur += 1;
+                if (this.avatar.getId()==autreId){
+                    System.out.println("Podium");
+                    System.out.println(compteur);
+                    System.out.println(this.avatar.getPodium());
+                    requete5.setInt(1, compteur);
+                    requete5.setInt(2, autreId);
+
+                    this.avatar.setPodium(compteur);
+                    requete5.executeUpdate();
+                    requete5.close();
+                    compteur += 1;
+                }
             }
             requete4.close();
         } catch (SQLException ex) {
@@ -99,6 +106,10 @@ public class Jeu {
         }
         
         try {
+//            PreparedStatement requete4 = c.prepareStatement("SELECT podium FROM joueur WHERE id=?");
+//            ResultSet resultat4 = requete4.executeQuery();
+            
+            
             int nombrePodium1=this.avatar.getPodium(); //afficher le classement du joueur
             String nombrePodium2=String.valueOf(nombrePodium1);
             String nombrePodium3="podium".concat(nombrePodium2);
