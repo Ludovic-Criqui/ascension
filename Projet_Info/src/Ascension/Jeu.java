@@ -58,18 +58,19 @@ public class Jeu {
 
     public void rendu(Graphics2D contexte) {
         this.carte.rendu(contexte,this.avatar.getYmap());
-
-        
+        System.out.println("Id avatar");
         System.out.println(this.avatar.getId());
-        
+        System.out.println("X");
+        System.out.println(this.avatar.getX());
+        System.out.println("Ymap");
+        System.out.println(this.avatar.getYmap());
         miseJourCoordonnéesSurSQL();
-        rafraichirPodium(contexte);
-        afficherPodium(contexte);
+//        rafraichirPodium(contexte);
         persoAvatar();
+//        afficherPodium(contexte);
         afficherVie(contexte);
         afficherPersoAvatar(contexte);
         afficherAutresJoueurs(contexte);
-        
     }
     
     public void afficherPodium(Graphics2D contexte){
@@ -101,19 +102,18 @@ public class Jeu {
             ResultSet resultat4 = requete4.executeQuery();
             int compteur = 1;
             while (resultat4.next()) {
-                System.out.println("Id Avatar");
-                System.out.println(this.avatar.getId());
-                System.out.println("Id autre");
+//                System.out.println("Id Avatar");
+//                System.out.println(this.avatar.getId());
+//                System.out.println("Id autre");
                 int autreId = resultat4.getInt("id");
-                System.out.println(autreId);
+//                System.out.println(autreId);
                 PreparedStatement requete5 = c.prepareStatement("UPDATE joueur SET podium = ? WHERE id = ?");
                 if (this.avatar.getId()==autreId){
-                    System.out.println("Podium");
-                    System.out.println(compteur);
-                    System.out.println(this.avatar.getPodium());
+//                    System.out.println("Podium");
+//                    System.out.println(compteur);
+//                    System.out.println(this.avatar.getPodium());
                     requete5.setInt(1, compteur);
                     requete5.setInt(2, autreId);
-
                     this.avatar.setPodium(compteur);
                     requete5.executeUpdate();
                     requete5.close();
@@ -132,11 +132,6 @@ public class Jeu {
             requete.setInt(1, this.avatar.getX());
             requete.setInt(2, this.avatar.getYmap());
             requete.setInt(3, this.avatar.getId());
-//            System.out.println(regles.gagneTotalement(this.avatar));
-//            System.out.println(regles.gagneTemporairement(this.avatar));
-            
-//            System.out.println(this.avatar.getX());
-//            System.out.println(this.avatar.getY());
             requete.executeUpdate();
             requete.close();
         } catch (SQLException ex) {
@@ -148,6 +143,8 @@ public class Jeu {
         try {
             PreparedStatement requete3 = c.prepareStatement("SELECT personnage FROM joueur WHERE id=?");
             requete3.setInt(1, this.avatar.getId());
+            System.out.println("perso");
+            System.out.println(this.avatar.getPersonnage());
             ResultSet resultat2 = requete3.executeQuery();
             while (resultat2.next()) {
                 personnageAvatar = resultat2.getInt("personnage");
@@ -202,9 +199,6 @@ public class Jeu {
                 int ordonnee = resultat.getInt("y");
 //                System.out.println(abscisse);
 //                System.out.println(ordonnee);
-//                if (idjoueur == 1 && this.avatar.getId() != 1) {
-//                    contexte.drawImage(mario, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
-//                }
                 if (personnageJoueur == 1 && idjoueur!=this.avatar.getId()){
                     contexte.drawImage(mario, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
                 }
