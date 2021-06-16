@@ -39,7 +39,7 @@ public class Avatar {
         }
         this.x = 120;
         this.y = 0;
-        // this.id = ;
+        this.id = id;
         this.gauche = false;
         this.droite = false;
         this.haut = false;

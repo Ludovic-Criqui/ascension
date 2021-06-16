@@ -218,7 +218,7 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
 //            }
 //        } else {
             try {
-                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur ");
+                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur  ");
 //                requete.setInt(1, this.id);
                 requete.executeUpdate();
                 requete.close();
@@ -238,7 +238,7 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
             PreparedStatement requete = c.prepareStatement("UPDATE joueur SET personnage = ?, partie = ? WHERE id = ?");
             requete.setInt(1,this.jeu.avatar.getPersonnage());
             System.out.println(this.jeu.avatar.getPersonnage());
-            requete.setInt(2, this.id);
+            requete.setInt(2, 1);
             requete.setInt(3, this.id);
             requete.executeUpdate();
             requete.close();

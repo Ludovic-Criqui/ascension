@@ -74,16 +74,21 @@ public class Jeu {
         } catch (SQLException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        System.out.println(this.avatar.getId());
         try {
+            
             PreparedStatement requete4 = c.prepareStatement("SELECT id FROM joueur ORDER BY y DESC");
             ResultSet resultat4 = requete4.executeQuery();
             int compteur = 1;
             while (resultat4.next()) {
-                int id = resultat4.getInt("id");
+                System.out.println("Id Avatar");
+                System.out.println(this.avatar.getId());
+                System.out.println("Id autre");
+                int autreId = resultat4.getInt("id");
+                System.out.println(autreId);
                 PreparedStatement requete5 = c.prepareStatement("UPDATE joueur SET podium = ? WHERE id = ?");
                 requete5.setInt(1, compteur);
-                requete5.setInt(2, id);
+                requete5.setInt(2, autreId);
                 requete5.executeUpdate();
                 requete5.close();
                 compteur += 1;
@@ -109,7 +114,8 @@ public class Jeu {
                 Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            PreparedStatement requete3 = c.prepareStatement("SELECT personnage FROM joueur");
+            PreparedStatement requete3 = c.prepareStatement("SELECT personnage FROM joueur WHERE id=?");
+            requete3.setInt(1, this.avatar.getId());
             ResultSet resultat2 = requete3.executeQuery();
             while (resultat2.next()) {
                 personnageAvatar = resultat2.getInt("personnage");
