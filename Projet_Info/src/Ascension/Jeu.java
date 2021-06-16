@@ -66,66 +66,10 @@ public class Jeu {
         rafraichirPodium(contexte);
         afficherPodium(contexte);
         persoAvatar();
+        afficherVie(contexte);
+        afficherPersoAvatar(contexte);
+        afficherAutresJoueurs(contexte);
         
-        try {
-            int nombreVie1=this.avatar.getVie();
-            String nombreVie2=String.valueOf(nombreVie1);
-            String nombreVie3="vie".concat(nombreVie2);
-            String nombreVie5=nombreVie3.concat(".png");
-            this.vie = ImageIO.read(new File(nombreVie5));
-            if (nombreVie1==0){
-                contexte.drawImage(this.mort, 200, 200, 400, 400, null);
-            }
-            else {
-                contexte.drawImage(this.vie, 70, 50, 50, 15, null);
-            }
-        } catch (IOException ex) {
-                Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            
-            if (personnageAvatar == 1) {
-                contexte.drawImage(mario, this.avatar.getX(), 400, 50, 50, null);
-            }
-            if (personnageAvatar == 2) {
-                contexte.drawImage(steve, this.avatar.getX(), 400, 50, 50, null);
-            }
-            if (personnageAvatar == 3) {
-                contexte.drawImage(amongus, this.avatar.getX(), 400, 50, 50, null);
-            }
-            if (personnageAvatar == 4) {
-                contexte.drawImage(ratchet, this.avatar.getX(), 400, 50, 50, null);
-            }
-            
-            PreparedStatement requete2 = c.prepareStatement("SELECT id, personnage, x, y FROM joueur");
-            ResultSet resultat = requete2.executeQuery();
-            while (resultat.next()) {
-                int idjoueur = resultat.getInt("id");
-                int personnageJoueur = resultat.getInt("personnage");
-                int abscisse = resultat.getInt("x");
-                int ordonnee = resultat.getInt("y");
-//                System.out.println(abscisse);
-//                System.out.println(ordonnee);
-//                if (idjoueur == 1 && this.avatar.getId() != 1) {
-//                    contexte.drawImage(mario, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
-//                }
-                if (personnageJoueur == 1 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(mario, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
-                }
-                if (personnageJoueur == 2 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(steve, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
-                }
-                if (personnageJoueur == 3 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(amongus, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
-                }
-                if (personnageJoueur == 4 && idjoueur!=this.avatar.getId()){
-                    contexte.drawImage(ratchet, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
-                }
-            }
-            requete2.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void afficherPodium(Graphics2D contexte){
@@ -209,6 +153,72 @@ public class Jeu {
                 personnageAvatar = resultat2.getInt("personnage");
             }
             requete3.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void afficherVie(Graphics2D contexte){
+        try {
+            int nombreVie1=this.avatar.getVie();
+            String nombreVie2=String.valueOf(nombreVie1);
+            String nombreVie3="vie".concat(nombreVie2);
+            String nombreVie5=nombreVie3.concat(".png");
+            this.vie = ImageIO.read(new File(nombreVie5));
+            if (nombreVie1==0){
+                contexte.drawImage(this.mort, 200, 200, 400, 400, null);
+            }
+            else {
+                contexte.drawImage(this.vie, 70, 50, 50, 15, null);
+            }
+        } catch (IOException ex) {
+                Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void afficherPersoAvatar(Graphics2D contexte){
+        if (personnageAvatar == 1) {
+            contexte.drawImage(mario, this.avatar.getX(), 400, 50, 50, null);
+        }
+        if (personnageAvatar == 2) {
+            contexte.drawImage(steve, this.avatar.getX(), 400, 50, 50, null);
+        }
+        if (personnageAvatar == 3) {
+            contexte.drawImage(amongus, this.avatar.getX(), 400, 50, 50, null);
+        }
+        if (personnageAvatar == 4) {
+            contexte.drawImage(ratchet, this.avatar.getX(), 400, 50, 50, null);
+        }
+    }
+    
+    public void afficherAutresJoueurs(Graphics2D contexte){
+        try {   
+            PreparedStatement requete2 = c.prepareStatement("SELECT id, personnage, x, y FROM joueur");
+            ResultSet resultat = requete2.executeQuery();
+            while (resultat.next()) {
+                int idjoueur = resultat.getInt("id");
+                int personnageJoueur = resultat.getInt("personnage");
+                int abscisse = resultat.getInt("x");
+                int ordonnee = resultat.getInt("y");
+//                System.out.println(abscisse);
+//                System.out.println(ordonnee);
+//                if (idjoueur == 1 && this.avatar.getId() != 1) {
+//                    contexte.drawImage(mario, abscisse, ordonnee+this.avatar.getYmap(), 50, 50, null);
+//                }
+                if (personnageJoueur == 1 && idjoueur!=this.avatar.getId()){
+                    contexte.drawImage(mario, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
+                }
+                if (personnageJoueur == 2 && idjoueur!=this.avatar.getId()){
+                    contexte.drawImage(steve, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
+                }
+                if (personnageJoueur == 3 && idjoueur!=this.avatar.getId()){
+                    contexte.drawImage(amongus, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
+                }
+                if (personnageJoueur == 4 && idjoueur!=this.avatar.getId()){
+                    contexte.drawImage(ratchet, abscisse,this.avatar.getYmap()-ordonnee+400, 50, 50, null);
+                }
+            }
+            requete2.close();
         } catch (SQLException ex) {
             Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
