@@ -14,7 +14,8 @@ public class Avatar {
     protected int x, y;
     private int Ymap = -1440;
     private BufferedImage mario, steve, amongus, ratchet;
-    private boolean gauche, droite, haut, bas, saut;
+    private boolean gauche, droite, haut, bas ;
+    private int saut;
     private int id = 1;
     private int personnage=1;
     private long date;
@@ -44,7 +45,6 @@ public class Avatar {
         this.droite = false;
         this.haut = false;
         this.bas = false;
-        this.saut = false;
         this.vie=3;
         this.etat=0;
         this.attaque = new Attaque();
@@ -52,6 +52,7 @@ public class Avatar {
         dateLimite = 0;
         this.partie=0;
         this.podium=2;
+        this.saut=Ymap;
     }
     
     public void setPersonnage(int personnage) {
@@ -74,7 +75,7 @@ public class Avatar {
         this.bas = bas;
     }
 
-    public void setSaut(boolean saut) {
+    public void setSaut(int saut) {
         this.saut = saut;
     }
 
@@ -152,25 +153,25 @@ public class Avatar {
             Ymap = 385;
         }
 
-        if (this.saut) {
-            date = System.currentTimeMillis();
-            if (date > dateLimite) {
-                if (!aSaute) {
-                    aSaute = true;
-                }
-            }
-
-            if (aSaute) {
-                Ymap += 64;
-                Thread.sleep(5);
-                timerSaut--;
-                if (timerSaut <= 0) {
-                    aSaute = false;
-                    dateLimite = System.currentTimeMillis() + 500;
-                }
-            }
-
-        }
+//        if (this.saut) {
+//            date = System.currentTimeMillis();
+//            if (date > dateLimite) {
+//                if (!aSaute) {
+//                    aSaute = true;
+//                }
+//            }
+//
+//            if (aSaute) {
+//                Ymap += 64;
+//                Thread.sleep(5);
+//                timerSaut--;
+//                if (timerSaut <= 0) {
+//                    aSaute = false;
+//                    dateLimite = System.currentTimeMillis() + 500;
+//                }
+//            }
+//
+//        }
 //        System.out.println(Ymap);
     }
 

@@ -26,6 +26,11 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     private Timer timer;
     private Règles regles;
     private int[] listeSolide;
+    private long dateLimite;
+    private long date=0;
+    private int compteur=0;
+    private long delaiSaut=0;
+    private boolean aSaute=false;
 
     public FenetreDeJeu() {
         // Creation du jeu
@@ -94,32 +99,53 @@ public class FenetreDeJeu extends JFrame implements ActionListener, KeyListener 
     
     @Override
     public void keyPressed(KeyEvent evt) {
+        date = System.currentTimeMillis();
+        if(date>dateLimite){
         if (evt.getKeyCode() == evt.VK_RIGHT && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()][this.jeu.getCarte().getYmur()+1]) ) {
             this.jeu.avatar.setX(this.jeu.avatar.getX() + 32);
             this.jeu.getCarte().setYmur(this.jeu.getCarte().getYmur()+1);
+            dateLimite=date+200;
         }
         if (evt.getKeyCode() == evt.VK_LEFT && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()][this.jeu.getCarte().getYmur()-1])) {
             this.jeu.avatar.setX(this.jeu.avatar.getX() - 32);
             this.jeu.getCarte().setYmur(this.jeu.getCarte().getYmur()-1);
+            dateLimite=date+200;
         }
         if (evt.getKeyCode() == evt.VK_UP && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()-1][this.jeu.getCarte().getYmur()])) {
             this.jeu.avatar.setYmap(this.jeu.avatar.getYmap() + 32);
             this.jeu.getCarte().setXmur(this.jeu.getCarte().getXmur()-1);
+            dateLimite=date+200;
         }
         if (evt.getKeyCode() == evt.VK_DOWN && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()+1][this.jeu.getCarte().getYmur()])) {
             this.jeu.avatar.setYmap(this.jeu.avatar.getYmap() - 32);
             this.jeu.getCarte().setXmur(this.jeu.getCarte().getXmur()+1);
+            dateLimite=date+200;
         }
-        if (evt.getKeyCode() == evt.VK_SPACE) {
-            this.jeu.avatar.setSaut(true);
-        }        
+        if(compteur<3){
+        if (evt.getKeyCode() == evt.VK_SPACE && this.nonSolide(this.jeu.getCarte().getDecor()[this.jeu.getCarte().getXmur()-1][this.jeu.getCarte().getYmur()])) {
+            this.jeu.avatar.setYmap(this.jeu.avatar.getYmap() + 32);
+            this.jeu.getCarte().setXmur(this.jeu.getCarte().getXmur()-1);
+            dateLimite=date+50;
+            compteur+=1;
+            
+        } 
+        }
+        if(compteur==3){                 //Permet de mettre un délai pour le prochain saut
+            if(aSaute==false){
+            delaiSaut=date+1000;
+            aSaute=true;}
+            if(aSaute==true && date>delaiSaut){
+        compteur=0;
+        aSaute=false;
+            }
+        }
+    
+    }
     }
 
     @Override
     public void keyReleased(KeyEvent evt) {
-        if (evt.getKeyCode() == evt.VK_SPACE) {
-            this.jeu.avatar.setSaut(false);
-        }        
+                
     }
     
 //    @Override
