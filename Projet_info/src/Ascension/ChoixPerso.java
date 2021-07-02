@@ -130,9 +130,9 @@ public class ChoixPerso extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         this.setVisible(false);
-        AcceuilFrame.getFrames()[0].setVisible(true);
+        AccueilFrame.getFrames()[0].setVisible(true);
         this.jeu.avatar.setPersonnage(choixPersonnage);
-        AcceuilFrame.initialisationjButton3();
+        AccueilFrame.initialisationjButton3();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

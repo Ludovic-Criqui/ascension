@@ -1,9 +1,6 @@
 package Ascension;
 
-import Outils.OutilsJDBC;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import static java.lang.Math.sqrt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Timer;
 
 public class Attaque {
     
@@ -28,7 +24,6 @@ public class Attaque {
     private int idPlusProche=0;
     private double angle;
     private double distanceAvecPlusProche;
-    private Timer timer;
     private boolean estTape;
     
 // Voir la méthode de création des attaques afin de définir plusieurs attaques (2 de chaque type(unique et groupe))
@@ -85,7 +80,7 @@ le rayon de chaque attaque avec un entier, ce que fait l'attaque aux autres joue
             }
             requete.close();
         } catch (SQLException ex) {
-            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccueilFrame.class.getName()).log(Level.SEVERE, null, ex);
         }  
         
         // Creation du Timer qui appelle this.actionPerformed() tous les 40 ms
@@ -227,30 +222,10 @@ le rayon de chaque attaque avec un entier, ce que fait l'attaque aux autres joue
         }
     }
     
-    public double angle(int xAvatar, int yAvatar, int xEnnemie, int yEnnemie){
-        double angle=Math.atan((yAvatar-yEnnemie)/(xAvatar-xEnnemie));
+    public double angle(int xAvatar, int yAvatar, int xEnnemi, int yEnnemi){
+        double angle=Math.atan((yAvatar-yEnnemi)/(xAvatar-xEnnemi));
         return angle;
     }
-    
-//    public void keyPressed(KeyEvent evt) {
-//        System.out.println("------------------------oui----------------------------");
-//        PreparedStatement requete;
-//        if ((evt.getKeyCode() == evt.VK_SPACE && this.getIdPlusProche()!=0)){
-//            System.out.println("------------------------oui----------------------------");
-//            try {
-//            
-//            requete = c.prepareStatement("UPDATE vie=? FROM joueur WHERE id =? ");
-//            ResultSet resultat = requete.executeQuery();
-//            
-//            while (resultat.next()) {
-//                
-//            }
-//            requete.close();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }  
-//        }
-//    }
 
     public void setIdPlusProche(int idPlusProche) {
         this.idPlusProche = idPlusProche;
@@ -278,7 +253,7 @@ le rayon de chaque attaque avec un entier, ce que fait l'attaque aux autres joue
         return nombreJoueursDansZone;
     }
     
-    public boolean présenceJoueursRayon(){
+    public boolean presenceJoueursRayon(){
         this.joueursDansRayon=true;
         if (this.nombreJoueursDansZone == 0){
             this.joueursDansRayon = false;

@@ -6,7 +6,6 @@
 package Ascension;
 
 
-import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import java.awt.Graphics2D;
@@ -24,7 +23,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -217,14 +215,6 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-//        try {
-//            requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
-//            requete.executeUpdate();
-//            requete.close();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AcceuilFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         PreparedStatement requete;
         if (this.id==1){
             try{
@@ -236,14 +226,6 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
             }
         }
         if (this.id!=1){
-//            try {
-//                requete = this.jeu.getC().prepareStatement("DELETE FROM joueur");
-//                requete.executeUpdate();
-//                requete.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } else {
             try {
                 requete = this.jeu.getC().prepareStatement("DELETE FROM joueur WHERE id=? ");
                 requete.setInt(1, this.id);
@@ -252,7 +234,7 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
             } catch (SQLException ex) {
                 Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            AcceuilFrame.getFrames()[0].setVisible(true);
+            AccueilFrame.getFrames()[0].setVisible(true);
             this.setVisible(false);
         }
         
@@ -272,20 +254,6 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
         }catch (SQLException ex) {
             Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
         }  
-        
-//        try{
-//            PreparedStatement requete = c.prepareStatement("UPDATE joueur SET personnage = ? WHERE id = ?");
-//            requete.setInt(1,this.jeu.avatar.getPersonnage());
-//            System.out.println(this.jeu.avatar.getPersonnage());
-//            requete.setInt(2, this.id);
-//            requete.executeUpdate();
-//            requete.close();
-//        }catch (SQLException ex) {
-//            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
-//        this.setVisible(false);
-//        this.fenetreJeu.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -385,13 +353,6 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
                         this.fenetreJeu.setVisible(true);
                         date = System.currentTimeMillis();
                         dateLimite=date+1000;
-//                        try{
-//                            PreparedStatement requete4 = c.prepareStatement("UPDATE joueur SET partie = 0 WHERE id = 1");
-//                            requete4.executeUpdate();
-//                            requete4.close();
-//                        }catch (SQLException ex) {
-//                            Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
                     }
                     if (resultatPartie==-1){
                         
@@ -402,7 +363,7 @@ public class SalonAttente extends javax.swing.JFrame implements ActionListener {
                         } catch (SQLException ex) {
                             Logger.getLogger(SalonAttente.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        AcceuilFrame.getFrames()[0].setVisible(true);
+                        AccueilFrame.getFrames()[0].setVisible(true);
                         this.setVisible(false);
                         
                     }

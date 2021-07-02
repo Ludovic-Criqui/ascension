@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 public class Avatar {
 
     protected int x, y;
-    private int Ymap = -3520;
+    private int yMap = -3520;
     private BufferedImage mario, steve, amongus, ratchet;
     private boolean gauche, droite, haut, bas ;
     private int saut;
@@ -20,8 +20,6 @@ public class Avatar {
     private int personnage=1;
     private long date;
     private long dateLimite;
-    private int timerSaut = 5;
-    private boolean aSaute;
     private String pseudo;
     private int vie;
     private int etat;
@@ -48,11 +46,10 @@ public class Avatar {
         this.vie=3;
         this.etat=0;
         this.attaque = new Attaque();
-        aSaute = false;
         dateLimite = 0;
         this.partie=0;
         this.podium=2;
-        this.saut=Ymap;
+        this.saut=yMap;
     }
     
     public void setPersonnage(int personnage) {
@@ -144,35 +141,14 @@ public class Avatar {
             y = 0;
         }
 
-        if (Ymap < -4000) {
-            Ymap = -4000;
+        if (yMap < -4000) {
+            yMap = -4000;
             
         }
 
-        if (Ymap > 385) {
-            Ymap = 385;
+        if (yMap > 385) {
+            yMap = 385;
         }
-
-//        if (this.saut) {
-//            date = System.currentTimeMillis();
-//            if (date > dateLimite) {
-//                if (!aSaute) {
-//                    aSaute = true;
-//                }
-//            }
-//
-//            if (aSaute) {
-//                Ymap += 64;
-//                Thread.sleep(5);
-//                timerSaut--;
-//                if (timerSaut <= 0) {
-//                    aSaute = false;
-//                    dateLimite = System.currentTimeMillis() + 500;
-//                }
-//            }
-//
-//        }
-//        System.out.println(Ymap);
     }
 
     public void rendu(Graphics2D contexte) {
@@ -180,7 +156,7 @@ public class Avatar {
     }
 
     public int getYmap() {
-        return Ymap;
+        return yMap;
     }
 
     public int getId() {
@@ -200,7 +176,7 @@ public class Avatar {
     }
        
     public void setYmap(int Ymap) {
-        this.Ymap = Ymap;
+        this.yMap = Ymap;
     }
 
 }
